@@ -52,7 +52,7 @@ class CompteBancaire:
     def versement(self, montant):
         self.__solde += montant
         return f"versement: {montant} euros"
-        return self.afficherSolde()
+
 
     def retrait(self, montant_retire, decouvert):
         if decouvert == False and montant_retire > self.__solde:
@@ -60,12 +60,33 @@ class CompteBancaire:
         else:
             self.__solde -= montant_retire
             return f"retrait: {montant_retire} euros"
-            return self.afficherSolde()
-            
-    
 
-client1 = CompteBancaire(123456, "Dupont", "Jean", 1000)
-client1.set_decouvert(False)   
+    def agios(self):
+        if self.__solde < 0:
+            self.__solde += self.__solde * 0.10
+            return f"agios: 10% du solde"
+        else:
+            return f"agios: pas d'agios"
+    
+    def virement(self, reference, compte, montant):
+        if self.get_decouvert() == False and montant > self.get_solde():
+            return f"virement: impossible. solde insuffisant"
+
+        elif self.get_decouvert() == True and montant > self.get_solde():
+            self.set_solde(self.get_solde() - montant)
+            compte.set_solde(compte.get_solde() + montant)
+            self.agios()
+            return f"virement: {montant} euros"
+
+        elif self.get_decouvert() == True and montant < self.get_solde():
+            self.set_solde(self.get_solde() - montant)
+            compte.set_solde(compte.get_solde() + montant)
+            return f"virement: {montant} euros effectue"
+        
+
+
+client1 = CompteBancaire(123456, "Dupont", "Jean", 10000)
+client1.set_decouvert(True)   
 print(client1.afficher())
 print(client1.afficherSolde())
 print(client1.versement(200))
@@ -74,3 +95,10 @@ print(client1.retrait(500, client1.get_decouvert()))
 print(client1.afficherSolde())
 print(client1.retrait(2000, client1.get_decouvert()))
 print(client1.afficherSolde())
+
+client2 = CompteBancaire(789101, "Durand", "Marie", -2000)
+client2.set_decouvert(True)
+print(client2.afficher())
+print(client2.afficherSolde())
+print(client1.virement(123456, client2, 2001))
+print(client2.afficherSolde())
