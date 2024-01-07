@@ -16,7 +16,6 @@ class Personnage:
         return self.__vie
 
     def set_vie(self, vie):
-        # Assurer que la vie ne devient pas négative
         self.__vie = max(vie, 0)
 
     # Autres méthodes
@@ -40,23 +39,22 @@ class Jeu:
 
     # Lancer jeu
     def lancerJeu(self):
-        joueur = Personnage("Gojo", 100 * self.niveau)
-        ennemi = Personnage("Sukuna", 99 * self.niveau)
-
+        gojo = Personnage("Gojo", 100 * self.niveau)
+        sukuna = Personnage("Sukuna", 99 * self.niveau)
         print(f"Vous affrontez Sukuna au niveau {self.niveau}.")
 
-        while joueur.get_vie() > 0 and ennemi.get_vie() > 0:
-            joueur.attaquer(ennemi)
-            if ennemi.get_vie() <= 0:
-                print(f"{ennemi.get_nom()} a ete vaincu ! Vous avez gagne.")
+        while gojo.get_vie() > 0 and sukuna.get_vie() > 0:
+            gojo.attaquer(sukuna)
+            if sukuna.get_vie() <= 0:
+                print(f"{sukuna.get_nom()} a ete vaincu ! Vous avez gagne.")
                 break
 
-            ennemi.attaquer(joueur)
-            if joueur.get_vie() <= 0:
-                print(f"{joueur.get_nom()} a ete vaincu ! Vous avez perdu.")
+            sukuna.attaquer(gojo)
+            if gojo.get_vie() <= 0:
+                print(f"{gojo.get_nom()} a ete vaincu ! Vous avez perdu.")
                 break
 
-            print(f"{joueur.get_nom()} Vie : {joueur.get_vie()} \n {ennemi.get_nom()} Vie : {ennemi.get_vie()}")
+            print(f"{gojo.get_nom()} Vie : {gojo.get_vie()} \n {sukuna.get_nom()} Vie : {sukuna.get_vie()}")
 
 
 

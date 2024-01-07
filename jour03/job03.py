@@ -79,6 +79,7 @@ liste_taches.ajouterTache(travail)
 liste_taches.ajouterTache(courses)
 liste_taches.afficherTaches()
 
+
 liste_taches.supprimerTache(travail)
 liste_taches.marquerCommeFinie(maison)
 liste_taches.afficherTaches()
