@@ -22,9 +22,12 @@ class Personnage:
 
     # Autres méthodes
     def attaquer(self, pv_personnage):
-        pv_personnage.set_vie(pv_personnage.get_vie() - random.randint(5, 10))
-        print(f"{self.__nom} attaque {pv_personnage.get_nom()}")
-        print(f"{pv_personnage.get_nom()} a {pv_personnage.get_vie()} pv")
+        affiche_degats = random.randint(1, 10)  
+        pv_personnage.set_vie(pv_personnage.get_vie() - affiche_degats)
+        return affiche_degats
+    
+
+
 
 
 class Jeu:
@@ -38,42 +41,38 @@ class Jeu:
         while self.niveau < 1 or self.niveau > 3:
             print("Niveau incorrect.")
             self.niveau = int(input("Choisissez le niveau de difficulte (1, 2, 3): "))
-            if self.niveau == 1:
-                gojo = Personnage("Gojo", 100)
-                sukuna = Personnage("Sukuna", 50)
-                print("Niveau facile.")
-            elif self.niveau == 2:
-                gojo = Personnage("Gojo", 100)
-                sukuna = Personnage("Sukuna", 75)
-                print("Niveau moyen.")
-            elif self.niveau == 3:
-                gojo = Personnage("Gojo", 100)
-                sukuna = Personnage("Sukuna", 120)
-                print("Niveau difficile.")
-
+        if self.niveau == 1:
+            gojo = Personnage("Gojo", 100)
+            sukuna = Personnage("Sukuna", 75)
+            print("Niveau facile.")
+        elif self.niveau == 2:
+            gojo = Personnage("Gojo", 100)
+            sukuna = Personnage("Sukuna", 100)
+            print("Niveau moyen.")
+        elif self.niveau == 3:
+            gojo = Personnage("Gojo", 100)
+            sukuna = Personnage("Sukuna", 125)
+            print("Niveau difficile.")
+        return gojo, sukuna
 
     # Lancer jeu
     def lancerJeu(self):
-        gojo = Personnage("Gojo", self.choisirNiveau())
-        sukuna = Personnage("Sukuna", self.choisirNiveau())
-        print(f"Vous affrontez Sukuna au niveau {self.niveau}.")
+        gojo, sukuna = self.choisirNiveau()
+        print(f"Vous affrontez Sukuna au niveau {self.niveau}.\nLa vie de {gojo.get_nom()} est a {gojo.get_vie()} pv \nLa vie de {sukuna.get_nom()} est a {sukuna.get_vie()} pv\n")
 
         while gojo.get_vie() > 0 and sukuna.get_vie() > 0:
-            gojo.attaquer(sukuna)
+            degats_gojo = gojo.attaquer(sukuna)
             if sukuna.get_vie() <= 0:
                 print(f"{sukuna.get_nom()} a ete vaincu ! Vous avez gagne.")
                 break
 
-            sukuna.attaquer(gojo)
+            degats_sukuna = sukuna.attaquer(gojo)
             if gojo.get_vie() <= 0:
                 print(f"{gojo.get_nom()} a ete vaincu ! Vous avez perdu.")
                 break
 
-            print(f"{gojo.get_nom()} Vie : {gojo.get_vie()} \n {sukuna.get_nom()} Vie : {sukuna.get_vie()}")
-
+            print(f"L'attaque de Sukuna a fait {degats_sukuna} pv de degats a Gojo: la vie de {gojo.get_nom()} est a {gojo.get_vie()} pv \n\nL'attaque de Gojo a fait {degats_gojo} pv de degats a Sukuna: la vie de {sukuna.get_nom()} est a {sukuna.get_vie()} pv\n")
 
 
 jeu = Jeu()
-
-jeu.choisirNiveau()
 jeu.lancerJeu()
