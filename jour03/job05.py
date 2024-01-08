@@ -1,3 +1,5 @@
+import random
+
 class Personnage:
     # Constructeur
     def __init__(self, nom, vie=100):
@@ -20,7 +22,7 @@ class Personnage:
 
     # Autres méthodes
     def attaquer(self, pv_personnage):
-        pv_personnage.set_vie(pv_personnage.get_vie() - 10)
+        pv_personnage.set_vie(pv_personnage.get_vie() - random.randint(5, 10))
         print(f"{self.__nom} attaque {pv_personnage.get_nom()}")
         print(f"{pv_personnage.get_nom()} a {pv_personnage.get_vie()} pv")
 
@@ -36,11 +38,24 @@ class Jeu:
         while self.niveau < 1 or self.niveau > 3:
             print("Niveau incorrect.")
             self.niveau = int(input("Choisissez le niveau de difficulte (1, 2, 3): "))
+            if self.niveau == 1:
+                gojo = Personnage("Gojo", 100)
+                sukuna = Personnage("Sukuna", 50)
+                print("Niveau facile.")
+            elif self.niveau == 2:
+                gojo = Personnage("Gojo", 100)
+                sukuna = Personnage("Sukuna", 75)
+                print("Niveau moyen.")
+            elif self.niveau == 3:
+                gojo = Personnage("Gojo", 100)
+                sukuna = Personnage("Sukuna", 120)
+                print("Niveau difficile.")
+
 
     # Lancer jeu
     def lancerJeu(self):
-        gojo = Personnage("Gojo", 100 * self.niveau)
-        sukuna = Personnage("Sukuna", 99 * self.niveau)
+        gojo = Personnage("Gojo", self.choisirNiveau())
+        sukuna = Personnage("Sukuna", self.choisirNiveau())
         print(f"Vous affrontez Sukuna au niveau {self.niveau}.")
 
         while gojo.get_vie() > 0 and sukuna.get_vie() > 0:

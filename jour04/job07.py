@@ -84,7 +84,7 @@ class Joueur(Jeu):
         while self.calcul_de_points(self.croupier) < 17:
             self.croupier.append(self.tirer_cartes())
             print("Le croupier a :", self.croupier)
-            print(self.paquet)
+            
 
             print(f"Le croupier a {self.calcul_de_points(self.croupier)} points")
 
