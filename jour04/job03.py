@@ -28,19 +28,19 @@ class Rectangle:
 class Parallelepipede(Rectangle):
     def __init__(self, longueur, largeur, hauteur):
         Rectangle.__init__(self, longueur, largeur)
-        self.hauteur = hauteur
+        self._hauteur = hauteur
 
     #hauteur
     def get_hauteur(self):
         return self._hauteur
 
     def set_hauteur(self, hauteur):
-        self.hauteur = hauteur
+        self._hauteur = hauteur
 
     #autres methodes
 
     def volume(self):
-        return self._longueur * self._largeur * self.hauteur
+        return self._longueur * self._largeur * self._hauteur
 
 rectangle1 = Rectangle(5, 10)
 print(rectangle1.perimetre())
